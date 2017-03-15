@@ -1,0 +1,317 @@
+# 1
+Observations from a Python programmer learning Go lang
+FOSS ASIA Summit 2017, Singapore
+
+Prashanth Pai
+Red Hat
+@prashanthpai
+ppai@redhat.com
+
+
+#2
+* $ whoami
+
+- Ex-Pythonista, Newbie Gopher
+- Software Engineer at Red Hat
+- Works on Openstack Swift and GlusterFS
+.image images/gopherconindia.png
+
+: Limited experience in C and Java, Python dev for 2.5 years and 5 months of Go
+: Projects using go - docker,kubernetes,etcd,influxdb
+: Purpose of this talk ?
+: Share my experience in this journey from python to go
+: Introduce Go for people who have programmed in Python
+: Invoke interest to explore Go further (know "what" to google)
+: Get a head start for people/projects which want to move
+
+
+#3
+* Hello world!
+Python code:
+.play -edit -numbers code/hello_world.py
+Go code:
+.play -edit -numbers code/hello_world.go
+
+LPT: Checkout [[https://godoc.org/golang.org/x/tools/present]]
+
+: Braces instead of ':' + indentation
+: Execution begins at main function
+: Almost nothing is in-built, unlike Python, example open() function
+: " " != ' '
+: Python print statement trick to not add '\n'
+
+
+#4
+* Type System
+
+Python (dynamically typed):
+.play -edit code/type.py /START OMIT/,/END OMIT/
+
+Go (statically typed):
+.play -edit code/type.go /START OMIT/,/END OMIT/
+
+: types are static - once set variable to a type, you cannot change it
+: typing is associated with variable and not the value it refers to
+: in go, compiler figures out what type it is from the first value you assign
+: type safe (type information is always stored)
+
+
+#5
+* Type System
+
+.play -edit code/type2.py /START OMIT/,/END OMIT/
+Go:
+.play -edit code/type2.go /START OMIT/,/END OMIT/
+
+: Function arguments types and return values are well defined
+: Unit testing and code coverage becomes mandatory
+
+
+#6
+* Functions
+
+- Can return multiple values
+- Can be variadic for trailing args
+- But no **kwargs
+- Can't set default value for args (will be zero-value for that type)
+
+
+#7
+* Operators
+
+"or" of Python is **||* in Go
+"and" of Python is **&&* in Go
+i++ is a statement, not an expression
+there's no ++i
+
+.play -edit code/op.go /START OMIT/,/END OMIT/
+
+Unlike Python, Go has the **goto* statement
+- Goto is not bad
+- Continue statement takes LABEL too
+
+: Your CPU only has goto statements
+: good for generated code and SMs
+: gets you out of nested loops
+
+**Pointers*
+- Go has them
+- You can dereference
+- But no pointer arithmetic
+
+
+#8
+* Operators
+
+There's no **in* operator in Go
+
+.play -edit code/inop.py /START OMIT/,/END OMIT/
+Go:
+.play -edit code/inop.go /START OMIT/,/END OMIT/
+
+
+#9
+* The curious case of 'switch' statement
+
+[[https://docs.python.org/2/faq/design.html][Why isn't there a switch or case statement in Python?]]
+
+    You can do this easily enough with a sequence of if... elif... elif... else
+
+See [[https://www.python.org/dev/peps/pep-0275/][PEP 275]] (Switching on Multiple Values)
+
+In Go:
+.play -edit code/switch.go /START OMIT/,/END OMIT/
+
+A case body breaks automatically, unless it ends with a `fallthrough` statement.
+
+
+#10
+* Looping: One 'for' to loop them all
+
+The classic for:
+.play -edit code/f1.go /START OMIT/,/END OMIT/
+While loop equivalent using for:
+.play -edit code/f2.go /START OMIT/,/END OMIT/
+Infinite:
+.play -edit code/f3.go /START OMIT/,/END OMIT/
+
+
+#11
+* Dictionary in Python
+
+.play -edit code/d1.py /START OMIT/,/END OMIT/
+Keys can be any immutable type
+
+
+#12
+* Dictionary in Go
+
+    map[KeyType]ValueType
+
+Example:
+.play -edit code/d1.go /START OMIT/,/END OMIT/
+
+- **range* in go is like **in* operator of python
+- Keys may be of any type that is comparable
+- Native `map` type is not goroutine-safe
+
+
+#13
+* Sets
+
+No sets in Go, but you can do this:
+.code code/sets.go
+
+
+#14
+* Error handling
+
+No try, catch, except in Go
+There's a bult-in **error* type, but you can define your own
+
+    func Open(name string) (file *File, err error)
+
+Error handling can get quite verbose and repetitive in Go
+
+.code code/err.go
+
+"Errors should never pass silently.
+Unless explicitly silenced." - The Zen of Python
+
+
+#15
+* Python's context manager and Golang's defer()
+
+.code code/context.py
+
+Used often in ensuring freeing resource or cleanup
+
+**defer()*
+
+.code code/defer2.go
+
+defers the execution of a function until the surrounding function returns
+
+.play -edit code/defer.go /START OMIT/,/END OMIT/
+
+: arguments are evaluated immediately
+: but the function call is not executed until the surrounding function returns
+: first in, last out (stack)
+
+
+#16
+* Closures
+
+Like Python's lambda functions, Go supports anonymous functions
+
+.play -edit code/closures.go /START OMIT/,/END OMIT/
+
+: scope of variable in functions
+
+- No built-in decorators like Python
+
+
+#17
+* Concurrency
+
+- Go-routines are user level threads (green threads in Python)
+
+: Python GIL, multiple cores
+
+
+#18
+* Channels
+
+"Don't communicate by sharing memory; share memory by communicating" - Rob Pike
+
+- Channels are like Unix pipes but are type-safe
+- Supports 3 operations - send, receive and close
+- Operates on only one value at a time
+- Can have a size (number of values it can buffer)
+
+: Also used to control throughout
+: To synchronize
+: Producer-consumer model
+
+
+#19
+* Generator pattern using goroutine + channels
+
+yield (diagram) next value, StopIteration
+
+
+#20
+* OOP: Object Oriented Programming in Go... without classes, objects and inheritance!
+
+
+#21
+* Duck typing using Interfaces
+
+- Define methods on any type
+- Convenience of duck typing but with the safety of static checking
+- Types can have methods only in same package (no monkeypatching)
+- No private, protected etc. Exporting or not is based on name
+
+
+#22
+* Composition over inheritance
+
+- No is-a relationship, only has-a a relationship
+- No inheritance, use struct embedding
+
+
+#23
+* Clean code. Easy deployment
+
+gofmt:
+similar to autopep8 in python
+
+    gofmt -w main.go
+
+Go compiler:
+- Doesn't throw warnings, but...
+- Disallows unused package imports
+- Disallows cyclic imports
+
+golint tool:
+- Checks for coding style mistakes
+- Forces documentation of exported types
+
+Deploying Go programs:
+- Static linking
+- Single binary, no external dependency
+
+
+#24
+* API Documentation
+
+- Godoc extracts and generates documentation from code comments
+- Hosted at godoc.org/<your-go-project-github-repo>
+- Very similar to sphinx autodoc in python
+
+Examples:
+Python: [[https://libgfapi-python.readthedocs.io/en/latest/]]
+Go: [[https://godoc.org/github.com/prashanthpai/sunrpc]]
+
+.image images/doc.png _ 350
+
+
+#25
+* Where to Go ?
+
+Take the **Tour* *of* *Go* journey in your browser: [[https://tour.golang.org]]
+
+[[https://gobyexample.com]] - hands-on intro to Go using annotated examples
+
+More interesting FAQs @ [[https://golang.org/doc/faq]]
+
+[[https://groups.google.com/forum/#!forum/Golang-nuts][golang-nuts]] - community mailing list
+
+[[https://www.youtube.com/watch?v=elu0VpLzJL8][Go for Pythonistas]] - talk by Fransesc Campoy
+
+[[https://github.com/jmcvetta/golang-for-python-programmers][Go for Python Programmers]] - book by Jason McVetta
+
+.image images/hiking.png _ 300
+
+# Like them gopher images ?
+# Thanks to: https://github.com/egonelbre/gophers
