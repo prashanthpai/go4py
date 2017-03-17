@@ -15,4 +15,6 @@ for v in d.values():
 # Get both keys and values
 for k, v in d.items():
     print k, v
+
+del d['age']
 # END OMIT

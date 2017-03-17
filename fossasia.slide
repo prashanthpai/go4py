@@ -7,16 +7,7 @@ Red Hat
 @prashanthpai
 ppai@redhat.com
 
-
-#2
-* $ whoami
-
-- Ex-Pythonista, Newbie Gopher
-- Software Engineer at Red Hat
-- Works on Openstack Swift and GlusterFS
-.image images/gopherconindia.png
-
-: Limited experience in C and Java, Python dev for 2.5 years and 5 months of Go
+: Ex-Pythonista, Newbie Gopher
 : Projects using go - docker,kubernetes,etcd,influxdb
 : Purpose of this talk ?
 : Share my experience in this journey from python to go
@@ -25,7 +16,7 @@ ppai@redhat.com
 : Get a head start for people/projects which want to move
 
 
-#3
+#2
 * Hello world!
 Python code:
 .play -edit -numbers code/hello_world.py
@@ -41,7 +32,7 @@ LPT: Checkout [[https://godoc.org/golang.org/x/tools/present]]
 : Python print statement trick to not add '\n'
 
 
-#4
+#3
 * Type System
 
 Python (dynamically typed):
@@ -56,7 +47,7 @@ Go (statically typed):
 : type safe (type information is always stored)
 
 
-#5
+#4
 * Type System
 
 .play -edit code/type2.py /START OMIT/,/END OMIT/
@@ -67,16 +58,16 @@ Go:
 : Unit testing and code coverage becomes mandatory
 
 
-#6
+#5
 * Functions
 
 - Can return multiple values
 - Can be variadic for trailing args
 - But no **kwargs
-- Can't set default value for args (will be zero-value for that type)
+- Can't set default value for args
 
 
-#7
+#6
 * Operators
 
 "or" of Python is **||* in Go
@@ -100,7 +91,7 @@ Unlike Python, Go has the **goto* statement
 - But no pointer arithmetic
 
 
-#8
+#7
 * Operators
 
 There's no **in* operator in Go
@@ -110,7 +101,7 @@ Go:
 .play -edit code/inop.go /START OMIT/,/END OMIT/
 
 
-#9
+#8
 * The curious case of 'switch' statement
 
 [[https://docs.python.org/2/faq/design.html][Why isn't there a switch or case statement in Python?]]
@@ -125,7 +116,7 @@ In Go:
 A case body breaks automatically, unless it ends with a `fallthrough` statement.
 
 
-#10
+#9
 * Looping: One 'for' to loop them all
 
 The classic for:
@@ -135,15 +126,18 @@ While loop equivalent using for:
 Infinite:
 .play -edit code/f3.go /START OMIT/,/END OMIT/
 
+: Python else part for a loop
+: You won't miss list comprehensions
 
-#11
+
+#10
 * Dictionary in Python
 
 .play -edit code/d1.py /START OMIT/,/END OMIT/
 Keys can be any immutable type
 
 
-#12
+#11
 * Dictionary in Go
 
     map[KeyType]ValueType
@@ -153,10 +147,9 @@ Example:
 
 - **range* in go is like **in* operator of python
 - Keys may be of any type that is comparable
-- Native `map` type is not goroutine-safe
 
 
-#13
+#12
 * Sets
 
 No sets in Go, but you can do this:
@@ -215,8 +208,13 @@ Like Python's lambda functions, Go supports anonymous functions
 * Concurrency
 
 - Go-routines are user level threads (green threads in Python)
+- Multiplexed onto OS threads
+- Unlike Python, there's no eventlet.sleep() or yield
+- Spawn a goroutine by prefixing **go* to a function call
+- Similar to the Unix shell's **&* notation
 
-: Python GIL, multiple cores
+
+    go SendDataToServer()
 
 
 #18
@@ -226,39 +224,53 @@ Like Python's lambda functions, Go supports anonymous functions
 
 - Channels are like Unix pipes but are type-safe
 - Supports 3 operations - send, receive and close
-- Operates on only one value at a time
 - Can have a size (number of values it can buffer)
+
+.image images/channel.png 300 _
 
 : Also used to control throughout
 : To synchronize
 : Producer-consumer model
+: Operates on only one value at a time
 
 
 #19
 * Generator pattern using goroutine + channels
 
-yield (diagram) next value, StopIteration
+.play -edit code/go.go /START OMIT/,/END OMIT/
 
 
 #20
 * OOP: Object Oriented Programming in Go... without classes, objects and inheritance!
 
 
-#21
-* Duck typing using Interfaces
 
-- Define methods on any type
-- Convenience of duck typing but with the safety of static checking
-- Types can have methods only in same package (no monkeypatching)
-- No private, protected etc. Exporting or not is based on name
+#21
+* Interfaces and duck typing
+
+: Interfaces provide abstraction
+: Go does not require us to explicitly state that our types implement an interface
+: you shouldn't care what type of object you have - just whether or not you can do the action on object
+: Convenience of duck typing but with the safety of static checking
+: Types can have methods only in same package (no monkeypatching)
+: No private, protected etc. Exporting or not is based on name
+: No implements
+: _ in python, case in go lang
+
+.code code/duck.go
+
+Define methods on any type you define
+Interfaces are satisfied implicitly
+Types and values instead of classes and objects
 
 
 #22
 * Composition over inheritance
 
-- No is-a relationship, only has-a a relationship
-- No inheritance, use struct embedding
+No is-a relationship, only has-a a relationship
+No inheritance, use struct embedding
 
+.code code/embed.go
 
 #23
 * Clean code. Easy deployment
