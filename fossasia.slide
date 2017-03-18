@@ -212,7 +212,7 @@ Like Python's lambda functions, Go supports anonymous functions
 
 
 #17
-* Concurrency
+* Concurrency - Goroutines and channels
 
 - Go-routines are user level threads (green threads in Python)
 - Multiplexed onto OS threads
