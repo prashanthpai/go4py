@@ -75,6 +75,8 @@ Go:
 i++ is a statement, not an expression
 there's no ++i
 
+: more like english
+
 .play -edit code/op.go /START OMIT/,/END OMIT/
 
 Unlike Python, Go has the **goto* statement
@@ -99,6 +101,10 @@ There's no **in* operator in Go
 .play -edit code/inop.py /START OMIT/,/END OMIT/
 Go:
 .play -edit code/inop.go /START OMIT/,/END OMIT/
+
+: python is hard to beat in prototyping
+: very expressive
+: upper case and lower case - export or not
 
 
 #8
@@ -126,7 +132,7 @@ While loop equivalent using for:
 Infinite:
 .play -edit code/f3.go /START OMIT/,/END OMIT/
 
-: Python else part for a loop
+: Python else part for a loop (not executed if there was a break)
 : You won't miss list comprehensions
 
 
@@ -256,6 +262,7 @@ Like Python's lambda functions, Go supports anonymous functions
 : No private, protected etc. Exporting or not is based on name
 : No implements
 : _ in python, case in go lang
+: No constructors
 
 .code code/duck.go
 
