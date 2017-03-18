@@ -23,6 +23,7 @@ Python code:
 Go code:
 .play -edit -numbers code/hello_world.go
 
+Slides: [[http://goo.gl/IPZLdu]]
 LPT: Checkout [[https://godoc.org/golang.org/x/tools/present]]
 
 : Braces instead of ':' + indentation
