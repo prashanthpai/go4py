@@ -74,9 +74,10 @@ Go:
 "or" of Python is **||* in Go
 "and" of Python is **&&* in Go
 i++ is a statement, not an expression
-there's no ++i
+there's no ++i (like Python)
 
 : more like english
+: in python, integers are immutable
 
 .play -edit code/op.go /START OMIT/,/END OMIT/
 
@@ -264,6 +265,7 @@ Like Python's lambda functions, Go supports anonymous functions
 : No implements
 : _ in python, case in go lang
 : No constructors
+: No monkeypatching is very annoying
 
 .code code/duck.go
 
