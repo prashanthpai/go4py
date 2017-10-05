@@ -8,6 +8,6 @@ func main() {
     // shorthand notation for declare and assign
     b := 23   // type is inferred
 
-    b = "fossasia" // invalid!
+    b = "glusterisawesome" // invalid!
 // END OMIT
 }

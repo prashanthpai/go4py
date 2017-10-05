@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # START OMIT
-a = "fossasia"
+a = "glusterisawesome"
 print a
 a = 5
 print a

@@ -1,11 +1,6 @@
 # 1
-Observations from a Python programmer learning Go lang
-FOSS ASIA Summit 2017, Singapore
-
-Prashanth Pai
+Golang for Python Programmers
 Red Hat
-@prashanthpai
-ppai@redhat.com
 
 : Ex-Pythonista, Newbie Gopher
 : Projects using go - docker,kubernetes,etcd,influxdb
@@ -26,12 +21,19 @@ Go code:
 Slides: [[http://goo.gl/IPZLdu]]
 LPT: Checkout [[https://godoc.org/golang.org/x/tools/present]]
 
+: convention in Go is to use MixedCaps or mixedCaps
+: init function
+: init() is always called, regardless if there's main or not, so if you import a package that has an init function, it will be executed
+: Language vs implementation: CPython, PyPy, Jython
+: pyc, pyo - bytecode
+: Executable commands must always use package main
 : Braces instead of ':' + indentation
 : Execution begins at main function
 : Almost nothing is in-built, unlike Python, example open() function
 : " " != ' '
 : Python print statement trick to not add '\n'
-
+: Zero values (int, bool, string)
+: nil vs NULL
 
 #3
 * Type System
@@ -46,7 +48,8 @@ Go (statically typed):
 : typing is associated with variable and not the value it refers to
 : in go, compiler figures out what type it is from the first value you assign
 : type safe (type information is always stored)
-
+: type converstions f := float64(i)
+: Unlike in C, in Go assignment between items of different type requires an explicit conversion
 
 #4
 * Type System
@@ -56,6 +59,8 @@ Go:
 .play -edit code/type2.go /START OMIT/,/END OMIT/
 
 : Function arguments types and return values are well defined
+: Variable name first, then data type
+: Specify multiple vars together (shortened)
 : Unit testing and code coverage becomes mandatory
 
 
@@ -66,6 +71,19 @@ Go:
 - Can be variadic for trailing args
 - But no **kwargs
 - Can't set default value for args
+- Named return values a.k.a naked return
+
+.play -edit code/functions.go /START OMIT/,/END OMIT/
+
+: Structs - export etc
+: Arrays
+: Use of range to go over slice or a map
+: length vs capacity
+: Use of make() to create array
+: Diff b/w new and make
+: new() returns a pointer to a newly allocated zero value of type T.
+: make() creates slices, maps, and channels only, and it returns an initialized (not zeroed) value of type T (not *T).
+: make([]int, 10, 100)
 
 
 #6
@@ -93,6 +111,8 @@ Unlike Python, Go has the **goto* statement
 - Go has them
 - You can dereference
 - But no pointer arithmetic
+
+: Pointers excercise
 
 
 #7
@@ -156,6 +176,9 @@ Example:
 - **range* in go is like **in* operator of python
 - Keys may be of any type that is comparable
 
+: Check existence using OK
+: Not thread-safe. Thread-safe version in 1.9
+
 
 #12
 * Sets
@@ -176,8 +199,16 @@ Error handling can get quite verbose and repetitive in Go
 
 .code code/err.go
 
+Go has panic() and recover() methods for handling serious errors
+
 "Errors should never pass silently.
 Unless explicitly silenced." - The Zen of Python
+
+: panic() example: indexing a slice out of bounds
+: stops execution of the current function and begins unwinding the stack
+: A call to recover stops the unwinding and returns the argument passed to panic
+: the only code that runs while unwinding is inside deferred functions, recover is only useful inside deferred functions
+: One use is to kill single goroutine
 
 
 #15
@@ -223,6 +254,8 @@ Like Python's lambda functions, Go supports anonymous functions
 
 
     go SendDataToServer()
+
+: Go has Mutexes too
 
 
 #18

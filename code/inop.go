@@ -13,7 +13,7 @@ func stringInSlice(query string, list []string) bool {
 }
 
 func main() {
-    list := []string{"fossasia", "go", "python"}
+    list := []string{"gluster", "go", "python"}
     fmt.Printf("%t\n", stringInSlice("go", list))
     fmt.Printf("%t\n", stringInSlice("java", list))
 }
