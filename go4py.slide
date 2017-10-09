@@ -18,7 +18,6 @@ Python code:
 Go code:
 .play -edit -numbers code/hello_world.go
 
-Slides: [[http://goo.gl/IPZLdu]]
 LPT: Checkout [[https://godoc.org/golang.org/x/tools/present]]
 
 : convention in Go is to use MixedCaps or mixedCaps
